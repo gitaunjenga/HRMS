@@ -253,19 +253,35 @@ function unreadNotificationCount(): int {
 
 function uploadFile(array $file, string $dir, array $allowedTypes): array {
     if ($file['error'] !== UPLOAD_ERR_OK) {
-        return ['success' => false, 'message' => 'Upload error code: ' . $file['error']];
+        $uploadErrors = [
+            UPLOAD_ERR_INI_SIZE   => 'File exceeds server upload_max_filesize limit.',
+            UPLOAD_ERR_FORM_SIZE  => 'File exceeds form MAX_FILE_SIZE limit.',
+            UPLOAD_ERR_PARTIAL    => 'File was only partially uploaded.',
+            UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
+            UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary upload folder.',
+            UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk.',
+            UPLOAD_ERR_EXTENSION  => 'Upload blocked by a PHP extension.',
+        ];
+        $msg = $uploadErrors[$file['error']] ?? 'Upload error code: ' . $file['error'];
+        return ['success' => false, 'message' => $msg];
     }
     if ($file['size'] > MAX_FILE_SIZE) {
         return ['success' => false, 'message' => 'File too large (max 5MB)'];
     }
     $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, $allowedTypes)) {
+    if (!in_array($ext, $allowedTypes, true)) {
         return ['success' => false, 'message' => 'Invalid file type. Allowed: ' . implode(', ', $allowedTypes)];
     }
+    // Trim both Unix and Windows trailing slashes — safe cross-platform
+    $dir = rtrim($dir, '/\\');
+    // Auto-create directory if missing (e.g. fresh Windows install)
+    if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
+        return ['success' => false, 'message' => 'Upload directory does not exist and could not be created.'];
+    }
     $filename = uniqid('', true) . '.' . $ext;
-    $dest = rtrim($dir, '/') . '/' . $filename;
+    $dest     = $dir . DIRECTORY_SEPARATOR . $filename;
     if (!move_uploaded_file($file['tmp_name'], $dest)) {
-        return ['success' => false, 'message' => 'Failed to move uploaded file'];
+        return ['success' => false, 'message' => 'Failed to save uploaded file. Check directory permissions.'];
     }
     return ['success' => true, 'filename' => $filename];
 }

@@ -56,7 +56,8 @@
       "Bash(/Applications/XAMPP/xamppfiles/bin/php -r \"echo PHP_VERSION;\")",
       "Bash(/Applications/XAMPP/xamppfiles/bin/php -l /Applications/XAMPP/xamppfiles/htdocs/HRMS/modules/users/index.php)",
       "Bash(1:*)",
-      "Bash(/Applications/XAMPP/xamppfiles/bin/php -l /Applications/XAMPP/xamppfiles/htdocs/HRMS/modules/settings/permissions.php)"
+      "Bash(/Applications/XAMPP/xamppfiles/bin/php -l /Applications/XAMPP/xamppfiles/htdocs/HRMS/modules/settings/permissions.php)",
+      "Bash(/Applications/XAMPP/xamppfiles/bin/mysqldump --socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock -u root hrms_db)"
     ],
     "additionalDirectories": [
       "/Applications/XAMPP/xamppfiles/htdocs/HRMS/modules/dashboard",

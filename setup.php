@@ -7,9 +7,9 @@
 
 // ── Config ─────────────────────────────────────────────────────────────────────
 $config = [
-    'host'   => 'localhost',
+    'host'   => '127.0.0.1',   // 127.0.0.1 works on both Windows XAMPP and Linux/macOS
     'user'   => 'root',
-    'pass'   => '',       // ← change if needed
+    'pass'   => '',             // XAMPP default: no password
     'dbname' => 'hrms_db',
 ];
 
@@ -19,7 +19,7 @@ $done     = false;
 
 // ── Run Setup ──────────────────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $config['host']   = trim($_POST['host']   ?? 'localhost');
+    $config['host']   = trim($_POST['host']   ?? '127.0.0.1');
     $config['user']   = trim($_POST['db_user'] ?? 'root');
     $config['pass']   = $_POST['db_pass']      ?? '';
     $config['dbname'] = trim($_POST['dbname']  ?? 'hrms_db');
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // 5. Update config/database.php
-            $configFile = __DIR__ . '/config/database.php';
+            $configFile = __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'database.php';
             if (file_exists($configFile)) {
                 $configContent = file_get_contents($configFile);
                 $configContent = preg_replace("/define\('DB_HOST',\s*'[^']*'\)/", "define('DB_HOST', '{$config['host']}')", $configContent);
@@ -81,10 +81,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $messages[] = '✅ config/database.php updated.';
             }
 
-            // 6. Ensure upload directories exist
-            $dirs = ['uploads', 'uploads/photos', 'uploads/documents', 'uploads/payslips'];
+            // 6. Ensure upload directories exist (cross-platform path separator)
+            $dirs = [
+                'uploads',
+                'uploads' . DIRECTORY_SEPARATOR . 'photos',
+                'uploads' . DIRECTORY_SEPARATOR . 'documents',
+                'uploads' . DIRECTORY_SEPARATOR . 'payslips',
+                'uploads' . DIRECTORY_SEPARATOR . 'leave_attachments',
+            ];
             foreach ($dirs as $dir) {
-                $path = __DIR__ . '/' . $dir;
+                $path = __DIR__ . DIRECTORY_SEPARATOR . $dir;
                 if (!is_dir($path)) {
                     mkdir($path, 0755, true);
                 }
@@ -177,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">MySQL Host</label>
-              <input type="text" name="host" value="<?= htmlspecialchars($_POST['host'] ?? 'localhost') ?>"
+              <input type="text" name="host" value="<?= htmlspecialchars($_POST['host'] ?? '127.0.0.1') ?>"
                      class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
             <div>
@@ -204,8 +210,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-700">
-          <strong>Tip:</strong> For XAMPP on Windows, default user is <code>root</code> with no password.
-          For MAMP/Linux, check your MySQL settings.
+          <strong>Tip:</strong> For XAMPP (Windows/macOS/Linux) the default is <code>127.0.0.1</code> / <code>root</code> / no password.
+          If the connection fails on Windows, try changing the host to <code>localhost</code>.
         </div>
       <?php endif; ?>
     </div>
