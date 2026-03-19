@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Applications/XAMPP/xamppfiles/bin/**)",
+      "Read(//usr/local/bin/**)",
+      "Read(//Applications/**)",
+      "Bash(/Applications/XAMPP/xamppfiles/bin/php -l config/database.php)",
+      "Bash(/Applications/XAMPP/xamppfiles/bin/php -l includes/functions.php)",
+      "Bash(/Applications/XAMPP/xamppfiles/bin/php -l auth/login.php)",
+      "Bash(/Applications/XAMPP/xamppfiles/bin/php -l modules/dashboard/index.php)",
+      "Bash(/Applications/XAMPP/xamppfiles/bin/apachectl status:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost/HRMS/)",
+      "Bash(open /Applications/XAMPP/manager-osx.app)",
+      "Bash(/Applications/XAMPP/xamppfiles/bin/mysql -u root -e \"SELECT VERSION\\(\\);\")",
+      "Bash(/Applications/XAMPP/xamppfiles/bin/mysql -u root -e \":*)",
+      "Bash(open \"http://localhost/HRMS/auth/login.php\")"
+    ]
+  }
+}

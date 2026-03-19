@@ -1,0 +1,210 @@
+/* HRMS Custom Styles */
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+/* Card */
+.card { @apply bg-white rounded-xl shadow-sm border border-gray-200; }
+
+/* Stat Card */
+.stat-card { @apply bg-white rounded-xl p-5 shadow-sm border border-gray-200 flex items-center gap-4; }
+
+/* Form Controls */
+.form-input {
+  @apply block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+         transition-colors placeholder-gray-400;
+}
+
+.form-select {
+  @apply block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+         transition-colors bg-white;
+}
+
+.form-label { @apply block text-sm font-medium text-gray-700 mb-1; }
+.form-error { @apply text-xs text-red-600 mt-1; }
+
+/* Buttons */
+.btn { @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2; }
+.btn-primary { @apply btn bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500; }
+.btn-secondary { @apply btn bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-gray-400; }
+.btn-danger { @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500; }
+.btn-success { @apply btn bg-green-600 text-white hover:bg-green-700 focus:ring-green-500; }
+.btn-sm { @apply px-3 py-1.5 text-xs; }
+.btn-icon { @apply inline-flex items-center justify-center p-2 rounded-lg transition-colors; }
+
+/* Table */
+.data-table { @apply w-full text-sm text-left; }
+.data-table th { @apply px-4 py-3 bg-gray-50 text-xs font-semibold text-gray-600 uppercase tracking-wider border-b border-gray-200; }
+.data-table td { @apply px-4 py-3 border-b border-gray-100 text-gray-700; }
+.data-table tr:hover td { @apply bg-gray-50; }
+.data-table tr:last-child td { @apply border-b-0; }
+
+/* Sidebar transition */
+aside { transition: transform 0.3s ease; }
+@media (max-width: 1023px) {
+  aside { transform: translateX(-100%); }
+  aside.open { transform: translateX(0); }
+  header, footer, main { margin-left: 0 !important; }
+}
+
+/* Alert */
+.alert { @apply flex items-start gap-3 p-4 rounded-lg text-sm; }
+.alert-success { @apply alert bg-green-50 text-green-800 border border-green-200; }
+.alert-error   { @apply alert bg-red-50 text-red-800 border border-red-200; }
+.alert-warning { @apply alert bg-yellow-50 text-yellow-800 border border-yellow-200; }
+.alert-info    { @apply alert bg-blue-50 text-blue-800 border border-blue-200; }
+
+/* Avatar */
+.avatar { @apply rounded-full object-cover; }
+.avatar-sm { @apply avatar w-8 h-8; }
+.avatar-md { @apply avatar w-10 h-10; }
+.avatar-lg { @apply avatar w-16 h-16; }
+.avatar-xl { @apply avatar w-24 h-24; }
+
+/* Loading spinner */
+.spinner { @apply animate-spin rounded-full border-4 border-gray-200; border-top-color: #0B2545; }
+
+/* Tooltip */
+[data-tooltip] { @apply relative cursor-pointer; }
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  @apply absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-xs text-white bg-gray-800 rounded whitespace-nowrap z-50;
+}
+
+/* Progress bar */
+.progress-bar { @apply h-2 rounded-full bg-gray-100 overflow-hidden; }
+.progress-fill { @apply h-full rounded-full transition-all duration-500; }
+
+/* Print styles */
+@media print {
+  aside, header, footer, .no-print { display: none !important; }
+  main { margin: 0 !important; }
+}
+
+/* ── Dark Mode ──────────────────────────────────────────────────────────── */
+
+/* Page background & base text */
+html.dark body                { background-color: #111827; color: #f3f4f6; }
+
+/* White surfaces → dark card */
+html.dark .bg-white           { background-color: #1f2937 !important; }
+html.dark .bg-gray-50         { background-color: #111827 !important; }
+html.dark .bg-gray-100        { background-color: #1f2937 !important; }
+html.dark .bg-gray-200        { background-color: #374151 !important; }
+
+/* Text colours */
+html.dark .text-gray-900      { color: #f9fafb !important; }
+html.dark .text-gray-800      { color: #f3f4f6 !important; }
+html.dark .text-gray-700      { color: #e5e7eb !important; }
+html.dark .text-gray-600      { color: #d1d5db !important; }
+html.dark .text-gray-500      { color: #9ca3af !important; }
+html.dark .text-gray-400      { color: #6b7280 !important; }
+
+/* Borders */
+html.dark .border-gray-100    { border-color: #374151 !important; }
+html.dark .border-gray-200    { border-color: #374151 !important; }
+html.dark .border-gray-300    { border-color: #4b5563 !important; }
+html.dark .divide-gray-200 > * + * { border-color: #374151 !important; }
+
+/* Form inputs */
+html.dark input[type="text"],
+html.dark input[type="email"],
+html.dark input[type="password"],
+html.dark input[type="number"],
+html.dark input[type="date"],
+html.dark input[type="time"],
+html.dark input[type="search"],
+html.dark input[type="tel"],
+html.dark select,
+html.dark textarea {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+html.dark input::placeholder,
+html.dark textarea::placeholder { color: #6b7280; }
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus { border-color: #2EC4B6; outline-color: #2EC4B6; }
+
+/* Tables */
+html.dark .data-table th       { background-color: #1f2937; color: #9ca3af; border-color: #374151; }
+html.dark .data-table td       { border-color: #374151; color: #d1d5db; }
+html.dark .data-table tr:hover td { background-color: #374151; }
+html.dark .data-table tr:last-child td { border-color: transparent; }
+
+/* Generic table elements (pages not using .data-table) */
+html.dark table thead th       { background-color: #1f2937 !important; color: #9ca3af !important; border-color: #374151 !important; }
+html.dark table tbody td       { border-color: #374151 !important; color: #d1d5db !important; }
+html.dark table tbody tr:hover { background-color: #374151 !important; }
+html.dark table tbody tr       { border-color: #374151 !important; }
+
+/* Buttons */
+html.dark .btn-secondary       { background-color: #374151; color: #e5e7eb; border-color: #4b5563; }
+html.dark .btn-secondary:hover { background-color: #4b5563; }
+
+/* Cards */
+html.dark .card                { background-color: #1f2937; border-color: #374151; }
+html.dark .stat-card           { background-color: #1f2937; border-color: #374151; }
+
+/* Alerts */
+html.dark .alert-success       { background-color: #064e3b; border-color: #065f46; color: #a7f3d0; }
+html.dark .alert-error         { background-color: #450a0a; border-color: #991b1b; color: #fca5a5; }
+html.dark .alert-warning       { background-color: #451a03; border-color: #92400e; color: #fde68a; }
+html.dark .alert-info          { background-color: #0c1a2e; border-color: #1e40af; color: #93c5fd; }
+
+/* Coloured background utilities used for status badges / alert banners */
+html.dark .bg-green-50         { background-color: #064e3b !important; }
+html.dark .bg-red-50           { background-color: #450a0a !important; }
+html.dark .bg-yellow-50        { background-color: #451a03 !important; }
+html.dark .bg-amber-50         { background-color: #451a03 !important; }
+html.dark .bg-blue-50          { background-color: #0c1a2e !important; }
+html.dark .bg-indigo-50        { background-color: #0f172a !important; }
+html.dark .bg-purple-50        { background-color: #1e1b4b !important; }
+html.dark .bg-orange-50        { background-color: #431407 !important; }
+html.dark .bg-teal-50          { background-color: #042f2e !important; }
+
+/* Coloured text adjustments in dark */
+html.dark .text-green-700      { color: #4ade80 !important; }
+html.dark .text-green-600      { color: #4ade80 !important; }
+html.dark .text-red-700        { color: #f87171 !important; }
+html.dark .text-red-600        { color: #f87171 !important; }
+html.dark .text-yellow-700     { color: #fcd34d !important; }
+html.dark .text-amber-800      { color: #fcd34d !important; }
+html.dark .text-blue-700       { color: #60a5fa !important; }
+html.dark .text-blue-600       { color: #60a5fa !important; }
+html.dark .text-indigo-700     { color: #a5b4fc !important; }
+html.dark .text-indigo-600     { color: #2EC4B6 !important; }
+html.dark .text-orange-700     { color: #fb923c !important; }
+html.dark .text-teal-700       { color: #2dd4bf !important; }
+html.dark .text-purple-700     { color: #c084fc !important; }
+
+/* Coloured borders */
+html.dark .border-green-200    { border-color: #065f46 !important; }
+html.dark .border-red-200      { border-color: #991b1b !important; }
+html.dark .border-yellow-200   { border-color: #92400e !important; }
+html.dark .border-amber-200    { border-color: #92400e !important; }
+html.dark .border-blue-200     { border-color: #1e40af !important; }
+html.dark .border-indigo-100   { border-color: #1e3a5f !important; }
+
+/* Shadows */
+html.dark .shadow-sm           { box-shadow: 0 1px 2px rgba(0,0,0,0.6) !important; }
+html.dark .shadow              { box-shadow: 0 1px 3px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.4) !important; }
+html.dark .shadow-lg           { box-shadow: 0 4px 16px rgba(0,0,0,0.6) !important; }
+
+/* Hover states for bg-white list items / menu rows */
+html.dark .hover\:bg-gray-50:hover  { background-color: #374151 !important; }
+html.dark .hover\:bg-gray-100:hover { background-color: #374151 !important; }
+
+/* Ring / outline adjustments */
+html.dark .ring-gray-200       { --tw-ring-color: #374151 !important; }
+
+/* Scrollbar in dark */
+html.dark ::-webkit-scrollbar-track { background: #1f2937; }
+html.dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+html.dark ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
