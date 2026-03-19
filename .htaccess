@@ -1,9 +1,9 @@
-# HRMS Apache Configuration
-# Compatible with Windows XAMPP and Linux/macOS Apache
+# HRMS — Apache Configuration
+# Works on Windows XAMPP 8.x and Linux/macOS Apache 2.4+
 
 Options -Indexes
 
-# Security Headers
+# Security headers
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
@@ -11,46 +11,15 @@ Options -Indexes
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Block sensitive file types
-<FilesMatch "\.(sql|log|env|ini|sh|bak|json)$">
-    Order Allow,Deny
-    Deny from all
+# Block sensitive file types (Apache 2.4 syntax)
+<FilesMatch "\.(sql|log|env|sh|bak)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
 </FilesMatch>
 
-# Prevent PHP execution inside uploads
+# Prevent PHP execution in uploads folder
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^uploads/.*\.(php|php5|phtml|pl|py|cgi)$ - [F,L]
+    RewriteRule ^uploads/.*\.(php|php5|phtml|phar|cgi|pl)$ - [F,L]
 </IfModule>
-
-# URL Rewriting
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /HRMS/
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-</IfModule>
-
-# PHP Settings — PHP 7.x as Apache module (Linux / macOS XAMPP)
-<IfModule mod_php.c>
-    php_value upload_max_filesize 10M
-    php_value post_max_size 12M
-    php_value max_execution_time 300
-    php_value memory_limit 256M
-    php_flag display_errors Off
-    php_flag log_errors On
-    php_value session.gc_maxlifetime 7200
-</IfModule>
-
-# PHP Settings — PHP 8.x as Apache module (Windows XAMPP 8.x)
-<IfModule mod_php8.c>
-    php_value upload_max_filesize 10M
-    php_value post_max_size 12M
-    php_value max_execution_time 300
-    php_value memory_limit 256M
-    php_flag display_errors Off
-    php_flag log_errors On
-    php_value session.gc_maxlifetime 7200
-</IfModule>
-
-# If PHP runs as FastCGI/CGI, set these values in php.ini instead.

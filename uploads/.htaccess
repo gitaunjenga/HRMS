@@ -1,6 +1,8 @@
-# Block PHP execution in uploads directory for security
-<FilesMatch "\.php$">
-    Order Allow,Deny
-    Deny from all
+# Block PHP execution in uploads — Apache 2.4 syntax
+Options -Indexes -ExecCGI
+
+<FilesMatch "\.(php|php5|phtml|phar|pl|cgi|py)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
 </FilesMatch>
-Options -Indexes
